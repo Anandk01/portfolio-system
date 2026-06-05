@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./apps/api
+    container_name: portfolio_api
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb://db:27017
+      - MONGODB_DB_NAME=portfolio_ai
+      - SECRET_KEY=your-secret-key-change-in-production
+    depends_on:
+      - db
+    volumes:
+      - ./apps/api/data:/app/data
+    networks:
+      - portfolio_net
+
+  frontend:
+    build: ./apps/web
+    container_name: portfolio_web
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=fallback-secret-for-dev
+    depends_on:
+      - backend
+    networks:
+      - portfolio_net
+
+  db:
+    image: mongo:6.0
+    container_name: portfolio_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - portfolio_net
+
+volumes:
+  mongo_data:
+
+networks:
+  portfolio_net:
+    driver: bridge

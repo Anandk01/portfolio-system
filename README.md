@@ -18,6 +18,7 @@ A production-grade, AI-powered portfolio management system built with **Next.js 
 - **Node.js** v18+
 - **Python** 3.11+
 - **MongoDB** (Running locally on port 27017)
+- **Tesseract OCR** (Required for PDF parsing. Install via `sudo apt install tesseract-ocr` on Linux, `brew install tesseract` on Mac, or download the Windows installer)
 
 ### 1. Backend Setup (FastAPI)
 Navigate to the API directory and set up the Python environment:
